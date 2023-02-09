@@ -4,6 +4,7 @@ const port = 5000;
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const authRoute = require("./routes/auth");
+const usersRoute = require("./routes/users");
 
 dotenv.config();
 
@@ -18,6 +19,9 @@ mongoose.connect(process.env.MONGO_URL)
 
 //auth route
 app.use("/api/auth", authRoute);
+
+//user route
+app.use("/api/users", usersRoute);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
