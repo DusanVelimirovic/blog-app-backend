@@ -5,6 +5,8 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const authRoute = require("./routes/auth");
 const usersRoute = require("./routes/users");
+const postRoute = require("./routes/post");
+
 
 dotenv.config();
 
@@ -22,6 +24,9 @@ app.use("/api/auth", authRoute);
 
 //user route
 app.use("/api/users", usersRoute);
+
+//post route
+app.use("/api/post", postRoute);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
