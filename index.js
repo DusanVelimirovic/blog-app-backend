@@ -16,6 +16,7 @@ dotenv.config();
 //allow us to send any json object
 app.use(express.json());
 
+
 mongoose.set('strictQuery', false);
 
 mongoose.connect(process.env.MONGO_URL)

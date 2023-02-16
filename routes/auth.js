@@ -1,5 +1,3 @@
-//handle registration and login
-
 const router = require("express").Router();
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
@@ -15,10 +13,9 @@ router.post("/register", async (req, res) => {
       password: hashedPass,
     });
 
-    //save new user
     const user = await newUser.save();
     res.status(200).json(user);
-  } catch (err) {
+  } catch (err) { 
     res.status(500).json(err);
   }
 });
@@ -26,20 +23,23 @@ router.post("/register", async (req, res) => {
 //LOGIN
 router.post("/login", async (req, res) => {
   try {
-    //check if user exist
     const user = await User.findOne({ username: req.body.username });
-    !user && res.status(400).json("Wrong credentials!");
+    if(!user)
+    {
+        return res.status(400).json("wrong credentials")
+    }
 
-    //check if passwords are same
     const validated = await bcrypt.compare(req.body.password, user.password);
-    !validated && res.status(400).json("Wrong credentials!");
+    if(!validated)
+    {
+        return res.status(400).json("wrong credentials");
+    }
 
-    //
-    const { password, ...others } = user._doc;
-    res.status(200).json(others);
-  } catch (err) {
+    res.status(200).json(user);
+
+} catch(err){
     res.status(500).json(err);
-  }
+}
 });
 
 module.exports = router;
